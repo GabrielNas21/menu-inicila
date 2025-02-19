@@ -1,0 +1,157 @@
+#include <stdio.h> //biblioteca de comunicação com o usuário
+#include <stdlib.h> //biblioteca de alocaçaõ de espaço em memória
+#include <locale.h> //biblioteca de alocações de texto por região
+#include <string.h> // biblioteca responsável por cuidar das string
+
+int registro() // Função responsavel por cadastrar os usuários no sistema
+{
+	    //inicio da criação de variáveis/string
+        char arquivo[40];
+		char cpf[40];
+		char nome[40];
+		char sobrenome[40];
+		char cargo[40];
+		
+		 //Final da criação de variáveis/string
+		
+		printf("Digite o CPF a ser cadastrado: ");//Coletando informações dos usuários
+		scanf("%s", cpf); //%s refere-se a string
+		
+		strcpy(arquivo, cpf); //Responsável por copiar os valores das string
+		
+		FILE *file; // Cria o arquivo
+		file = fopen(arquivo, "w"); // Cria o arquivo e o "w" significa escrever
+		fprintf(file,cpf); // Salva o valor da variavel
+		fclose(file); // Fecha o arquivo
+		
+		file = fopen(arquivo, "a");
+		fprintf(file,",");
+		fclose(file);
+		
+		printf("Digite o nome a ser cadastrado: ");//Coletando informações dos usuários
+		scanf("%s",nome); //%s refere-se a string
+		
+		file = fopen(arquivo, "a");
+		fprintf(file,nome);
+		fclose(file);
+		
+    	file = fopen(arquivo, "a");
+		fprintf(file,",");
+		fclose(file);
+		
+		printf("Digite o sobrenome a ser cadastrado: ");//Coletando informações dos usuários
+		scanf("%s" ,sobrenome); //%s refere-se a string
+		
+		file = fopen(arquivo, "a");
+		fprintf(file,sobrenome);
+		fclose(file);
+		
+    	file = fopen(arquivo, "a");
+		fprintf(file,",");
+		fclose(file);
+		
+		printf("Digite o cargo a ser cadastrado: ");//Coletando informações dos usuários
+		scanf("%s" ,cargo); //%s refere-se a string
+		
+		file = fopen(arquivo, "a");
+		fprintf(file,cargo);
+		fclose(file);
+		
+		system("pause");
+}
+
+int consulta()
+{
+	
+	setlocale(LC_ALL, "Portuguese"); // definindo a linguagem
+	
+	char cpf[40];
+	char conteudo[200];
+	
+	printf("Digite o cpf a ser consultado: ");
+	scanf("%s", cpf); //%s refere-se a string
+	
+	FILE *file;// Cria o arquivo
+	file = fopen (cpf, "r");//Cria o arquivo e o "r" significa ler
+	
+	if(file == NULL)
+	{
+		printf("Não foi possivel abrir o arquivo, não localizado!. \n");
+	}
+	
+	while(fgets(conteudo, 200, file) != NULL)
+	{
+		printf("\nEssas são as informações do usuário: ");
+		printf("%s", conteudo); //%s refere-se a string
+		printf("\n\n");
+	}
+	
+	system("pause");
+	
+}
+
+int excluir()
+{
+	    char cpf[40];
+	    
+	    printf("Digite o CPF do usuário a ser deletado: ");
+	    scanf("%s", cpf); //%s refere-se a string
+	    
+	    remove(cpf);
+	    
+	    FILE *file;// Cria o arquivo
+	    file = fopen(cpf, "r");
+	    
+	    if(file == NULL)
+	    {
+	    	printf("O usuário foi deletado e não se encontra no sistema!.\n");
+	    	system("pause");
+		}
+}
+
+int main()
+{
+	int opcao=0; // definindo variáveis
+	int looping=1;
+	
+	for(looping=1;looping=1;)
+	{
+	
+    	system("cls");//Responsavel por limpar a tela
+	
+    	setlocale(LC_ALL, "Portuguese"); // definindo a linguagem
+	
+	    printf(" \tMenu Inicial\n\n "); // inicio do menu
+    	printf("Escolha a opção desejada do Menu:\n\n");
+    	printf("\t1 - Registrar Nomes\n");
+     	printf("\t2 - Consultar Nomes\n");
+     	printf("\t3 - Excluir Nomes\n\n");
+     	printf("Opção: "); //fim do menu
+		
+    	scanf("%d", &opcao); // arnazenando a escolho do usuário
+	
+     	system("cls"); //Responsavel por limpar a tela
+     	
+     	switch(opcao) // inicio da seleção do menu
+     	{
+     		case 1:
+     		registro(); //Chamada de funções
+			break;
+			
+			case 2:
+			consulta();
+    		break;
+			
+			case 3:
+			excluir();
+			break;
+			
+			default:
+			printf("Essa Opcão Não Existe!\n");
+    		system("pause");
+    		break;
+    
+        } //fim da seleção
+       
+    }
+}
